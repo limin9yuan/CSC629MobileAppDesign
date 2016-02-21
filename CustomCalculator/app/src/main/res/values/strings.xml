@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">CustomCalculator</string>
+    <string name="main_description">Hello, this is my first Android Mobile App. Please swipe the screen from
+        right to left to access to the Calculator view.</string>
+    <string name="title_activity_start">Hello Folks</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_calculator">Simple Calculator</string>
+    <string name="calc_input_hint">Input your expression.</string>
+    <!-- Calculator keyboard keys -->
+    <string name="key_0">0</string>
+    <string name="key_1">1</string>
+    <string name="key_2">2</string>
+    <string name="key_3">3</string>
+    <string name="key_4">4</string>
+    <string name="key_5">5</string>
+    <string name="key_6">6</string>
+    <string name="key_7">7</string>
+    <string name="key_8">8</string>
+    <string name="key_9">9</string>
+    <string name="key_dot">.</string>
+    <string name="key_plus">+</string>
+    <string name="key_minus">-</string>
+    <string name="key_divide">/</string>
+    <string name="key_multiply">x</string>
+    <string name="key_equals">=</string>
+    <string name="key_clear">CLR</string>
+    <string name="key_del">DEL</string>
+    <string name="title_activity_test_swipe">TestSwipeActivity</string>
+</resources>
