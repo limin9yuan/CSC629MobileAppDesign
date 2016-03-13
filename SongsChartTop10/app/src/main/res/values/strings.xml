@@ -1,0 +1,18 @@
+<!--  File       : strings.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 02/24/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+
+<resources>
+    <string name="app_name">SongsChartTop10</string>
+    <string name="apple_top10_songs_url">http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=10/xml</string>
+    <string name="apple_top10_album_url">http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topalbums/limit=10/xml</string>
+    <string name="rss_entry_xpath">"/feed/entry"</string>
+    <string name="rss_name_xpath">"im:name"</string>
+    <string name="rss_artist_xpath">"im:artist"</string>
+    <string name="rss_album_name_xpath">"im:collection/im:name"</string>
+    <string name="rss_release_date_xpath">"im:releasedate"</string>
+</resources>
