@@ -1,0 +1,58 @@
+<!--  File       : activity_maps.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 03/16/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.android.jason.googlemapapp.MainActivity">
+
+    <fragment android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="net.android.jason.googlemapapp.MapsActivity" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2.8"
+            android:textColor="@color/input_font_color"
+            android:textCursorDrawable="@null"/>
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.2"
+            android:text="@string/search_button_text"
+            android:id="@+id/direction"
+            android:background="@color/black_overlay"
+            android:textColor="@color/white_overlay"
+            android:onClick="onClick"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

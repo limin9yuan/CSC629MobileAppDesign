@@ -1,0 +1,22 @@
+<!--  File       : strings.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 03/17/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<resources>
+    <string name="app_name">GoogleMapApp</string>
+    <string name="title_activity_maps">Custom Map</string>
+    <string name="init_location">
+        5600 city avenue, philadelphia, PA 19131</string>
+    <string name="search_text_hint">Type your address</string>
+    <string name="search_button_text">Go</string>
+    <string name="pos_default_latitude">39.995105</string>
+    <string name="pos_default_longitude">-75.237791</string>
+    <string name="pos_default_title">Barbelin Hall</string>
+    <string name="dir_route_mode">driving</string>
+    <string name="dir_api_base_url">
+        https://maps.googleapis.com/maps/api/directions/json</string>
+    <string name="google_map_color_blue">#05b1fb</string>
+</resources>
