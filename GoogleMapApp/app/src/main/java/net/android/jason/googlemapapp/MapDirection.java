@@ -92,7 +92,7 @@ class MapDirection extends AsyncTask<Address, Void, List<LatLng>> {
 //        CameraUpdate camUpdate = CameraUpdateFactory.newLatLngZoom(
 //                bounds.getCenter(), (float)zoomIn);
         CameraUpdate camUpdate =
-                CameraUpdateFactory.newLatLngBounds(bounds, 0);
+                CameraUpdateFactory.newLatLngBounds(bounds, 10);
         map.animateCamera(camUpdate);
     }
 
