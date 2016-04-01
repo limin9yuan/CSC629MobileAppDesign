@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  File       : rss_settings.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 03/29/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<resources>
+    <string name="apple_rss_songs_top_25">http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/ws/RSS/topsongs/limit=25/json</string>
+    <string name="rss_key_root">feed</string>
+    <string name="rss_key_album">im:collection</string>
+    <string name="rss_key_album_name">im:name</string>
+    <string name="rss_key_artist">im:artist</string>
+    <string name="rss_key_song_entry">entry</string>
+    <string name="rss_key_release_date">im:releaseDate</string>
+    <string name="rss_key_release_date_attr">attributes</string>
+    <string name="rss_key_song_name">im:name</string>
+    <string name="rss_key_price">im:price</string>
+    <string name="rss_key_title">title</string>
+    <string name="rss_key_copyright">rights</string>
+    <string name="rss_key_genre">category</string>
+    <string name="rss_key_genre_attr">attributes</string>
+    <string name="rss_key_covers">im:image</string>
+    <string name="rss_key_covers_attr">attributes</string>
+    <string name="rss_key_covers_attr_height">height</string>
+    <string name="rss_key_value">label</string>
+</resources>

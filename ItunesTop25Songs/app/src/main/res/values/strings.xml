@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Itunes Top 25 Songs</string>
+    <string name="action_settings">Settings</string>
+    <string name="song_cover_default_desc">Cover</string>
+</resources>

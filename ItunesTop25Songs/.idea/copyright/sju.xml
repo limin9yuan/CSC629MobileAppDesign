@@ -1,0 +1,7 @@
+<component name="CopyrightManager">
+  <copyright>
+    <option name="keyword" value="header" />
+    <option name="myName" value="sju" />
+    <option name="notice" value=" File       : &amp;#36;file.fileName&#10; Revision   : &amp;#36;Id&amp;#36;&#10; Course     : &amp;#36;module.name&#10; Date       : &amp;#36;today.format(&quot;MM/dd/yyyy&quot;)&#10; Author     : &amp;#36;username&#10; Description: This file contains..." />
+  </copyright>
+</component>

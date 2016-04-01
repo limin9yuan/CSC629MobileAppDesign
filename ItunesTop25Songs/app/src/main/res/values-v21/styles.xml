@@ -1,0 +1,16 @@
+<!--  File       : styles.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 03/21/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<resources>>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>

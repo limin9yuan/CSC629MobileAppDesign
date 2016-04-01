@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--  File       : song_entry.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 04/01/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="2dp">
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/cover"
+        android:layout_gravity="top|center_horizontal"
+        android:scaleType="fitCenter"
+        android:src="@drawable/placeholder"
+        android:contentDescription="@string/song_cover_default_desc"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/title"
+        android:text="@string/rss_key_title"
+        android:layout_gravity="top|start"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/cover"
+        android:layout_alignParentTop="true" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/rss_key_artist"
+        android:id="@+id/artist"
+        android:layout_below="@+id/title"
+        android:layout_alignLeft="@+id/title"
+        android:maxLines="2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/rss_key_album"
+        android:id="@+id/album"
+        android:layout_below="@+id/artist"
+        android:layout_alignLeft="@+id/title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/rss_key_price"
+        android:id="@+id/price"
+        android:layout_below="@+id/album"
+        android:layout_alignLeft="@+id/title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/rss_key_release_date"
+        android:id="@+id/release"
+        android:layout_alignLeft="@+id/title"
+        android:layout_below="@+id/price" />
+</RelativeLayout>
