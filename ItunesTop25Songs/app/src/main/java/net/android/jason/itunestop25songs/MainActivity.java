@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import net.android.jason.itunestop25songs.utils.ItunesRSSParser;
 import net.android.jason.itunestop25songs.utils.SongData;
@@ -66,12 +65,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    public void onTestButtonClick(View view) {
-        ItunesRSSParser parser = new ItunesRSSParser(getResources());
-        parser.execute(getString(R.string.apple_rss_songs_top_25));
     }
 
 

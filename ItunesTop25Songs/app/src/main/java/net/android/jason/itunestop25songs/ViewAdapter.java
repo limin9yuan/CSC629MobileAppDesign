@@ -87,9 +87,6 @@ public class ViewAdapter extends RecyclerView.Adapter<SongEntryViewHolder> {
     public void onBindViewHolder(SongEntryViewHolder holder, int position) {
         SongData song = songs.get(position);
         int count = processed.size();
-        Log.d(clazz,
-                String.format(
-                        "Loading item %d --> %s", position, song.getName()));
         holder.title.setText(song.getName());
         holder.album.setText("Album: " + song.getAlbum());
         holder.artist.setText("Artist: " + song.getArtist());
@@ -100,7 +97,7 @@ public class ViewAdapter extends RecyclerView.Adapter<SongEntryViewHolder> {
                 .placeholder(R.drawable.placeholder)
                 .into(holder.cover);
 
-        processed.add(song.getTitle());
+        processed.add(position);
         if (count != processed.size())
             itemCount.setText("Count: " + processed.size());
     }
@@ -118,7 +115,7 @@ public class ViewAdapter extends RecyclerView.Adapter<SongEntryViewHolder> {
 
 
     private List<SongData> songs;
-    private Set<String> processed;
+    private Set<Integer> processed;
     private Context context;
     private TextView itemCount;
     private final static String clazz = ViewAdapter.class.getSimpleName();

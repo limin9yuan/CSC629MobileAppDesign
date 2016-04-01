@@ -126,9 +126,6 @@ public class ItunesRSSParser extends AsyncTask<String, Void, List<SongData>> {
         else {
             state = ProcessStatus.SUCCESS;
             Log.d(clazz, "Parsed songs: Count = " + songs.size());
-            Log.d(clazz, "************* Parsed song objects:");
-            for (SongData song: songs)
-                Log.d(clazz, song.toString());
         }
         Log.d(clazz, "Parsing: " + state.toString());
     }
@@ -191,7 +188,6 @@ public class ItunesRSSParser extends AsyncTask<String, Void, List<SongData>> {
             String line;
             while ((line = br.readLine()) != null)
                 buff.append(String.format("%s%n", line));
-            Log.d(clazz, "JSON downloaded: " + buff.toString());
             return buff.toString();
         } catch (IOException ioe) {
             Log.e(clazz, "IOException: " + ioe.getMessage(), ioe);
