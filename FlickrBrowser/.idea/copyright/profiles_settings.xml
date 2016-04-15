@@ -1,0 +1,13 @@
+<component name="CopyrightManager">
+  <settings default="sju">
+    <module2copyright>
+      <element module="All" copyright="sju" />
+    </module2copyright>
+    <LanguageOptions name="__TEMPLATE__">
+      <option name="block" value="false" />
+      <option name="separateBefore" value="true" />
+      <option name="separateAfter" value="true" />
+      <option name="filler" value="-" />
+    </LanguageOptions>
+  </settings>
+</component>
