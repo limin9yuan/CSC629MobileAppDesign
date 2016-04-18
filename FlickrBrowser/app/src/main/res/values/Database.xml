@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  File       : database.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 04/17/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+<resources>
+    <string name="database_name">FlickrBrowser.db</string>
+</resources>

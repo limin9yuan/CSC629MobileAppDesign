@@ -1,5 +1,6 @@
 package net.android.jason.flickerbrowser;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-import net.android.jason.flickrbrowser.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
     private static final String LOG_TAG = "MainActivity";
-    private List<Photo> mPhotosList = new ArrayList<Photo>();
+    private List<Photo> mPhotosList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private FlickrRecyclerViewAdapter flickrRecyclerViewAdapter;
 
@@ -26,22 +26,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-//        GetRawData theRawData = new GetRawData("https://api.flickr.com/services/feeds/photos_public.gne?tags=android,lollipop&format=json&nojsoncallback=1");
         activateToolbar();
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
@@ -58,7 +45,10 @@ public class MainActivity extends BaseActivity {
             public void onItemLongClick(View view, int position) {
 //                Toast.makeText(MainActivity.this, "Long tap", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, ViewPhotoDetailsActivity.class);
-                intent.putExtra(PHOTO_TRANSFER, flickrRecyclerViewAdapter.getPhoto(position));
+                intent.putExtra(
+                        PHOTO_ID,
+                        flickrRecyclerViewAdapter.getPhoto(position).getId()
+                );
                 startActivity(intent);
             }
         }));
@@ -102,19 +92,14 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private String getSavedPreferenceData(String key) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return sharedPref.getString(key, "");
-    }
-
     public class ProcessPhotos extends GetFlickrJsonData {
 
         public ProcessPhotos(String searchCriteria, boolean matchAll) {
-            super(searchCriteria, matchAll);
+            super(MainActivity.this, searchCriteria, matchAll);
         }
 
+        @Override
         public void execute() {
-            //super.execute();
             ProcessData processData = new ProcessData();
             processData.execute();
         }
@@ -124,11 +109,14 @@ public class MainActivity extends BaseActivity {
             protected void onPostExecute(String webData) {
                 super.onPostExecute(webData);
                 flickrRecyclerViewAdapter.loadNewData(getPhotos());
-
-
             }
         }
 
     }
 
+
+    private String getSavedPreferenceData(String key) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        return sharedPref.getString(key, "");
+    }
 }

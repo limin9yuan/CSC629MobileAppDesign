@@ -1,5 +1,6 @@
 package net.android.jason.flickerbrowser;
 
+import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 
@@ -7,8 +8,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import android.database.Cursor;
 
 /**
  * Created by dev on 17/02/2016.
@@ -16,13 +21,16 @@ import java.util.List;
 public class GetFlickrJsonData extends GetRawData {
 
     private String LOG_TAG = GetFlickrJsonData.class.getSimpleName();
-    private List<Photo> mPhotos;
+    //private List<Photo> mPhotos;
     private Uri mDestinationUri;
+    private Context context;
 
-    public GetFlickrJsonData(String searchCriteria, boolean matchAll) {
+    public GetFlickrJsonData(Context context, String searchCriteria,
+                             boolean matchAll) {
         super(null);
-        createAndUpdateUri(searchCriteria,matchAll);
-        mPhotos = new ArrayList<Photo>();
+        createAndUpdateUri(searchCriteria, matchAll);
+        //mPhotos = new ArrayList<>();
+        this.context = context;
     }
 
     public void execute() {
@@ -40,7 +48,7 @@ public class GetFlickrJsonData extends GetRawData {
         final String NO_JSON_CALLBACK_PARAM = "nojsoncallback";
 
         mDestinationUri = Uri.parse(FLICKR_API_BASE_URL).buildUpon()
-                .appendQueryParameter(TAGS_PARAM,searchCriteria)
+                .appendQueryParameter(TAGS_PARAM, searchCriteria)
                 .appendQueryParameter(TAGMODE_PARAM, matchAll ? "ALL" : "ANY")
                 .appendQueryParameter(FORMAT_PARAM, "json")
                 .appendQueryParameter(NO_JSON_CALLBACK_PARAM, "1")
@@ -50,57 +58,87 @@ public class GetFlickrJsonData extends GetRawData {
     }
 
     public List<Photo> getPhotos() {
-        return mPhotos;
+        List<Photo> photos = new ArrayList<>();
+        FlickrDatabaseHelper helper = new FlickrDatabaseHelper(context);
+        helper.connectForRead();
+        Cursor cur = helper.fetchAll();
+        while (!cur.isLast()) {
+            photos.add(Photo.getInstance(cur));
+            cur.moveToNext();
+        }
+        cur.close();
+        helper.disconnect();
+        return photos;
     }
 
     public void processResult() {
 
-        if(getmDownloadStatus() != DownloadStatus.OK) {
+        if (getmDownloadStatus() != DownloadStatus.OK) {
             Log.e(LOG_TAG, "Error downloading raw file");
             return;
         }
 
         final String FLICKR_ITEMS = "items";
-        final String FLICKR_TITLE = "title";
-        final String FLICKR_MEDIA = "media";
-        final String FLICKR_PHOTO_URL = "m";
-        final String FLICKR_AUTHOR = "author";
-        final String FLICKR_AUTHOR_ID = "author_id";
-        final String FLICKR_LINK = "link";
-        final String FLICKR_TAGS = "tags";
-
+        List<Photo> mPhotos = new ArrayList<>();
         try {
-
             JSONObject jsonData = new JSONObject(getmData());
             JSONArray itemsArray = jsonData.getJSONArray(FLICKR_ITEMS);
-            for(int i=0; i<itemsArray.length(); i++) {
-
+            for (int i = 0; i < itemsArray.length(); i++) {
                 JSONObject jsonPhoto = itemsArray.getJSONObject(i);
-                String title = jsonPhoto.getString(FLICKR_TITLE);
-                String author = jsonPhoto.getString(FLICKR_AUTHOR);
-                String authorId = jsonPhoto.getString(FLICKR_AUTHOR_ID);
-//                String link = jsonPhoto.getString(FLICKR_LINK);
-                String tags = jsonPhoto.getString(FLICKR_TAGS);
-
-                JSONObject jsonMedia = jsonPhoto.getJSONObject(FLICKR_MEDIA);
-                String photoUrl = jsonMedia.getString(FLICKR_PHOTO_URL);
-                String link = photoUrl.replaceFirst("_m.","_b.");
-
-                Photo photoObject = new Photo(title, author, authorId, link, tags, photoUrl);
-
-                this.mPhotos.add(photoObject);
+                Photo photoObject = Photo.getInstance(jsonPhoto);
+                mPhotos.add(photoObject);
             }
-
-            for(Photo singlePhoto: mPhotos) {
-                Log.v(LOG_TAG, singlePhoto.toString());
-            }
-
-        } catch(JSONException jsone) {
+        } catch (JSONException jsone) {
             jsone.printStackTrace();
-            Log.e(LOG_TAG,"Error processing Json data");
+            Log.e(LOG_TAG, "Error processing Json data");
         }
 
+        FlickrDatabaseHelper helper = new FlickrDatabaseHelper(context);
+        helper.connectForUpdate();
+        for (Photo singlePhoto : mPhotos) {
+            Log.v(LOG_TAG, singlePhoto.toString());
+
+            // download image
+            HttpURLConnection conn = null;
+            InputStream is = null;
+            try {
+                URL url = new URL(singlePhoto.getImage());
+                conn = (HttpURLConnection)url.openConnection();
+
+                conn.connect();
+                is = conn.getInputStream();
+                singlePhoto.setThumbnail(BitmapUtility.readBytes(is));
+                is.close();
+                conn.disconnect();
+
+                url = new URL(singlePhoto.getLink());
+                conn = (HttpURLConnection)url.openConnection();
+
+                conn.connect();
+                is = conn.getInputStream();
+                singlePhoto.setPicture(BitmapUtility.readBytes(is));
+                is.close();
+                conn.disconnect();
+            } catch (Exception ioe) {
+                Log.e(LOG_TAG, "Failed to download image", ioe);
+            } finally {
+                try {
+                    if (conn != null)
+                        conn.disconnect();
+                    if (is != null)
+                        is.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Log.d(LOG_TAG, "Saving into DB");
+            helper.insertPhoto(singlePhoto);
+        }
+        helper.disconnect();
+
     }
+
 
     public class DownloadJsonData extends DownloadRawData {
 
@@ -111,7 +149,7 @@ public class GetFlickrJsonData extends GetRawData {
         }
 
         protected String doInBackground(String... params) {
-            String[] par = { mDestinationUri.toString() };
+            String[] par = {mDestinationUri.toString()};
             return super.doInBackground(par);
         }
 

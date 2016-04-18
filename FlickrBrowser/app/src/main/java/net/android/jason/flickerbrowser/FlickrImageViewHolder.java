@@ -4,7 +4,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import net.android.jason.flickrbrowser.R;
 
 /**
  * Created by dev on 17/02/2016.

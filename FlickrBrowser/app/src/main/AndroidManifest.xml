@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="net.android.jason.flickrbrowser"
+<manifest package="net.android.jason.flickerbrowser"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/Theme.Flickr">
         <activity
-            android:name="net.android.jason.flickrbrowser.MainActivity"
+            android:name="MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -18,13 +18,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="net.android.jason.flickrbrowser.SearchActivity"
+            android:name="SearchActivity"
             android:label="@string/title_activity_search"
-            android:parentActivityName="net.android.jason.flickrbrowser.MainActivity"
+            android:parentActivityName="MainActivity"
             android:theme="@style/Theme.Flickr">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.android.jason.flickrbrowser.MainActivity"/>
+                android:value="MainActivity"/>
 
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
@@ -37,13 +37,13 @@
                 android:resource="@xml/searchable"/>
         </activity>
         <activity
-            android:name="net.android.jason.flickrbrowser.ViewPhotoDetailsActivity"
+            android:name="ViewPhotoDetailsActivity"
             android:label="@string/title_activity_view_photo_details"
-            android:parentActivityName="net.android.jason.flickrbrowser.MainActivity"
+            android:parentActivityName="MainActivity"
             android:theme="@style/Theme.Flickr">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="net.android.jason.flickrbrowser.MainActivity"/>
+                android:value="MainActivity"/>
         </activity>
     </application>
 

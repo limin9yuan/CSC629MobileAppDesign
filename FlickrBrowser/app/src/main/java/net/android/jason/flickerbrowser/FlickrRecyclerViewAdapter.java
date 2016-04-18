@@ -1,14 +1,12 @@
 package net.android.jason.flickerbrowser;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.squareup.picasso.Picasso;
-import net.android.jason.flickrbrowser.R;
 
 import java.util.List;
 
@@ -17,11 +15,9 @@ import java.util.List;
  */
 public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageViewHolder> {
     private List<Photo> mPhotosList;
-    private Context mContext;
     private final String LOG_TAG = FlickrRecyclerViewAdapter.class.getSimpleName();
 
     public FlickrRecyclerViewAdapter(Context context, List<Photo> photosList) {
-        mContext = context;
         this.mPhotosList = photosList;
     }
 
@@ -38,10 +34,8 @@ public class FlickrRecyclerViewAdapter extends RecyclerView.Adapter<FlickrImageV
         Photo photoItem = mPhotosList.get(i);
         Log.d(LOG_TAG,"Processing: " + photoItem.getTitle() + " --> " + Integer.toString(i));
 
-        Picasso.with(mContext).load(photoItem.getImage())
-                .error(R.drawable.placeholder)
-                .placeholder(R.drawable.placeholder)
-                .into(flickrImageViewHolder.thumbnail);
+        Bitmap bitmap = BitmapUtility.getImage(photoItem.getThumbnail());
+        flickrImageViewHolder.thumbnail.setImageBitmap(bitmap);
         flickrImageViewHolder.title.setText(photoItem.getTitle());
     }
 
