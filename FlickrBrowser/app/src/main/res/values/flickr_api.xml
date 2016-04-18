@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  File       : flickr_api.xml -->
+<!--  Revision   : $Id$ -->
+<!--  Course     : app -->
+<!--  Date       : 04/18/2016 -->
+<!--  Author     : Jason -->
+<!--  Description: This file contains... -->
+
+
+<resources>
+    <string name="flickr_base_uri">"https://api.flickr.com/services/feeds/photos_public.gne"</string>
+    <string name="flickr_param_tags">tags</string>
+    <string name="flickr_param_tagmode">tagmode</string>
+    <string name="flickr_param_format">format</string>
+    <string name="flickr_param_no_json_callback">nojsoncallback</string>
+    <string name="flickr_json_items">items</string>
+</resources>

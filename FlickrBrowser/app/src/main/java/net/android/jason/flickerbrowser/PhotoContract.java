@@ -19,12 +19,28 @@ import android.util.Log;
 public final class PhotoContract implements SchemaContract {
     @Override
     public String createSchemaSQL() {
+
+        /*
+        CREATE TABLE flickrphoto (
+            _id INTEGER NOT NULL AUTOINCREMENT,
+            title TEXT NOT NULL,
+            author_id TEXT NOT NULL,
+            author TEXT,
+            thumb_link TEXT NOT NULL,
+            link TEXT NOT NULL,
+            tags TEXT,
+            thumbnail BLOB,
+            picture BLOB
+        )
+         */
+
         StringBuffer b = new StringBuffer(20);
         String s = String.format("%1$s %2$s (", FlickrEntry.DDL_CREATE_TABLE,
                 FlickrEntry.TABLE_NAME);
         b.append(s);
-        s = String.format("%1$s %2$s %3$s,", FlickrEntry._ID, FlickrEntry.INT_TYPE,
-                FlickrEntry.AUTO_INCREMENTAL);
+        s = String.format("%1$s %2$s %3$s %4$s %5$s,",
+                FlickrEntry._ID, FlickrEntry.INT_TYPE, FlickrEntry.NOT_NULL,
+                FlickrEntry.PRIMARY_KEY, FlickrEntry.AUTO_INCREMENTAL);
         b.append(s);
         s = String.format("%1$s %2$s %3$s,", FlickrEntry._TITLE,
                 FlickrEntry.TEXT_TYPE, FlickrEntry.NOT_NULL);
@@ -46,10 +62,7 @@ public final class PhotoContract implements SchemaContract {
         s = String.format("%1$s %2$s,", FlickrEntry._THUMBNAIL,
                 FlickrEntry.BLOB_TYPE);
         b.append(s);
-        s = String.format("%1$s %2$s,", FlickrEntry._PICTURE, FlickrEntry.BLOB_TYPE);
-        b.append(s);
-        s = String.format("%1$s (%2$s %3$s)", FlickrEntry.PRIMARY_KEY,
-                FlickrEntry._TITLE, FlickrEntry._AUTHOR_ID);
+        s = String.format("%1$s %2$s", FlickrEntry._PICTURE, FlickrEntry.BLOB_TYPE);
         b.append(s);
         b.append(")");
         final String sql = b.toString();
@@ -69,9 +82,12 @@ public final class PhotoContract implements SchemaContract {
 
     @Override
     public String createIndexSQL() {
+        // CREATE INDEX photo_id_idx ON flickrphoto(title, author_id)
         final String sql =
-                String.format("CREATE INDEX photo_id_idx ON %1$s(%2$s)",
-                        FlickrEntry.TABLE_NAME, FlickrEntry._ID);
+                String.format("CREATE INDEX photo_id_idx ON %1$s(%2$s, %3$s)",
+                        FlickrEntry.TABLE_NAME,
+                        FlickrEntry._TITLE,
+                        FlickrEntry._AUTHOR_ID);
         Log.d(clazz, "create index: " + sql);
         return sql;
     }

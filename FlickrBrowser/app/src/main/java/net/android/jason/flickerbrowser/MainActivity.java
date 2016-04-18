@@ -3,6 +3,7 @@ package net.android.jason.flickerbrowser;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,8 +32,8 @@ public class MainActivity extends BaseActivity {
         mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        flickrRecyclerViewAdapter = new FlickrRecyclerViewAdapter(MainActivity.this,
-                new ArrayList<Photo>());
+        flickrRecyclerViewAdapter =
+                new FlickrRecyclerViewAdapter(MainActivity.this, new ArrayList<Photo>());
         mRecyclerView.setAdapter(flickrRecyclerViewAdapter);
         mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(this,
                 mRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
@@ -87,32 +88,62 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         String query = getSavedPreferenceData(FLICKR_QUERY);
         if (query.length() > 0) {
-            ProcessPhotos processPhotos = new ProcessPhotos(query, true);
+            ProcessPhotos processPhotos =
+                    new ProcessPhotos(this, query, true);
             processPhotos.execute();
         }
     }
 
-    public class ProcessPhotos extends GetFlickrJsonData {
 
-        public ProcessPhotos(String searchCriteria, boolean matchAll) {
-            super(MainActivity.this, searchCriteria, matchAll);
+    private class ProcessPhotos extends FlickrDownloader {
+        public ProcessPhotos(Context context, String searchCriteria, boolean
+                matchAll) {
+            super(context, searchCriteria, matchAll);
         }
 
         @Override
-        public void execute() {
-            ProcessData processData = new ProcessData();
-            processData.execute();
+        public void onPostExecute(List<Photo> photos) {
+            super.onPostExecute(photos);
+            flickrRecyclerViewAdapter.loadNewData(getPhotos());
         }
-
-        public class ProcessData extends DownloadJsonData {
-
-            protected void onPostExecute(String webData) {
-                super.onPostExecute(webData);
-                flickrRecyclerViewAdapter.loadNewData(getPhotos());
-            }
-        }
-
     }
+
+//    public class ProcessPhotos extends GetFlickrJsonData {
+//
+//        public ProcessPhotos(String searchCriteria, boolean matchAll) {
+//            super(MainActivity.this, searchCriteria, matchAll);
+//        }
+//
+//        @Override
+//        public void execute() {
+//            ProcessData processData = new ProcessData();
+//            processData.execute();
+//        }
+//
+//        public class ProcessData extends DownloadJsonData {
+//
+//            protected void onPostExecute(String webData) {
+//                super.onPostExecute(webData);
+//                flickrRecyclerViewAdapter.loadNewData(getPhotos());
+//            }
+//        }
+//
+//
+//        public List<Photo> getPhotos() {
+//            List<Photo> photos = new ArrayList<>();
+//            FlickrDatabaseHelper helper =
+//                    new FlickrDatabaseHelper(MainActivity.this);
+//            helper.connectForRead();
+//            Cursor cur = helper.fetchAll();
+//            while (!cur.isLast()) {
+//                photos.add(Photo.getInstance(cur));
+//                cur.moveToNext();
+//            }
+//            cur.close();
+//            helper.disconnect();
+//            return photos;
+//        }
+//    }
 
 
     private String getSavedPreferenceData(String key) {
